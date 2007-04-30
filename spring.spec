@@ -1,7 +1,7 @@
 %define name spring
 %define version 0.74
-%define beta b2
-%define rel 2
+%define beta b3
+%define rel 1
 %define release %mkrel 0.%{beta}.%{rel}
 
 %define distname spring_%{version}%{beta}
