@@ -1,7 +1,7 @@
 %define name spring
 %define version 0.74
 %define beta b3
-%define rel 1
+%define rel 2
 %define release %mkrel 0.%{beta}.%{rel}
 
 %define distname spring_%{version}%{beta}
@@ -13,7 +13,7 @@ Release: %{release}
 Source0: http://prdownload.berlios.de/taspring-linux/%{distname}_src.tar.bz2
 Patch0: spring-0.74-py25.patch
 Patch1: spring-0.74-luxi.patch
-License: GPL
+License: GPLv2+
 Group: Games/Strategy
 Url: http://taspring.clan-sy.com/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -41,6 +41,7 @@ more.
 %setup -q -n %{distname}
 %patch0 -p1 -b .py25
 %patch1 -p1 -b .luxi
+perl -pi -e 's,%{name}.png,%{name},g' rts/%{name}.desktop
 
 %build
 scons configure prefix=%{_prefix} installprefix=%{buildroot}%{_prefix} libdir=%{_lib}/%{name}
@@ -50,11 +51,15 @@ scons
 rm -rf %{buildroot}
 scons install
 
+# these files also exist in spring-data, I think those versions should
+# be correct so remove from here - AdamW 2007/09
+rm -f %{buildroot}%{_gamesdatadir}/%{name}/base/spring/bitmaps.sdz
+rm -f %{buildroot}%{_gamesdatadir}/%{name}/base/springcontent.sdz
+
 perl -pi -e 's|^Exec=.*|Exec=%{_gamesbindir}/%{name}|' %{buildroot}%{_datadir}/applications/%{name}.desktop
 desktop-file-install \
   --vendor="" \
   --remove-category="Application" \
-  --add-category="X-MandrivaLinux-MoreApplications-Games-Strategy" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 install -d -m755 %{buildroot}%{_sysconfdir}/%{name}
@@ -72,5 +77,4 @@ rm -rf %{buildroot}
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
-
 
