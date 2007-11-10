@@ -28,6 +28,7 @@ BuildRequires: python-devel
 BuildRequires: scons
 BuildRequires: zip
 BuildRequires: zlib-devel
+BuildRequires: classpath-devel java-1.7.0-icedtea
 Requires: %{name}-data
 Requires: x11-font-bh-ttf
 
