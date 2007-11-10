@@ -1,7 +1,7 @@
 %define name spring
-%define version 0.74
-%define beta b3
-%define rel 2
+%define version 0.75
+%define beta b2
+%define rel 1
 %define release %mkrel 0.%{beta}.%{rel}
 
 %define distname spring_%{version}%{beta}
@@ -11,7 +11,6 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://prdownload.berlios.de/taspring-linux/%{distname}_src.tar.bz2
-Patch0: spring-0.74-py25.patch
 Patch1: spring-0.74-luxi.patch
 License: GPLv2+
 Group: Games/Strategy
@@ -39,7 +38,6 @@ more.
 
 %prep
 %setup -q -n %{distname}
-%patch0 -p1 -b .py25
 %patch1 -p1 -b .luxi
 perl -pi -e 's,%{name}.png,%{name},g' rts/%{name}.desktop
 
