@@ -15,6 +15,7 @@ Patch1: spring-0.74-luxi.patch
 License: GPLv2+
 Group: Games/Strategy
 Url: http://taspring.clan-sy.com/
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: SDL-devel
 BuildRequires: boost-devel
 BuildRequires: desktop-file-utils
