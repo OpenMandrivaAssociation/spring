@@ -7,7 +7,7 @@
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
 Version:	0.77b5
-Release:	%{mkrel 1}
+Release:	%{mkrel 2}
 Source0:	http://planetspring.free.fr/%{name}/src/%{distname}-%{distname}_src.tar.bz2
 # use system luxi:
 Patch1:		spring-0.77-luxi.patch
