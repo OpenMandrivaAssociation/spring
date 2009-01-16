@@ -6,14 +6,19 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.77b5
-Release:	%{mkrel 2}
-Source0:	http://planetspring.free.fr/%{name}/src/%{distname}-%{distname}_src.tar.bz2
+Version:	0.78.1.1
+Release:	%{mkrel 1}
+Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system luxi:
-Patch1:		spring-0.77-luxi.patch
+Patch1:		spring-0.78.1.1-luxi.patch
 # (Anssi 01/2008) put unitsync.log into ~/.spring, it ends up in pwd when some
 # external tools dlopen unitsync.so:
+# FIXME: the code completely changed with 0.78. I'm not sure if it still
+# needs to be patched, but if so, it needs to be re-diffed. Patch is
+# disabled below - AdamW 2009/01
 Patch2:		spring-0.77-unitsynclog.patch
+# Fix a string literal error - AdamW 2009/01
+Patch3:		spring-0.78.1.1-literal.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -44,7 +49,7 @@ Obsoletes:	%{name}-data < 0.75
 Requires:	x11-font-bh-ttf
 # Some mod is required, this is the one that was shipped with
 # spring-data:
-Suggests:	spring-mod-nanoblob
+Suggests:	spring-mod-nanoblobs
 # Some map is required, these are the default maps from the
 # installer:
 Suggests:	spring-maps-default
@@ -59,7 +64,9 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .luxi
-%patch2 -p1
+# See above FIXME notice - AdamW 2009/01
+#patch2 -p1
+%patch3 -p1 -b .literal
 perl -pi -e 's,%{name}.png,%{name},g' rts/%{name}.desktop
 
 cat > README.install.urpmi <<EOF
