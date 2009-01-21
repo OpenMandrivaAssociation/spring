@@ -6,7 +6,7 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.78.1.1
+Version:	0.78.2.1
 Release:	%{mkrel 1}
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system luxi:
@@ -17,8 +17,6 @@ Patch1:		spring-0.78.1.1-luxi.patch
 # needs to be patched, but if so, it needs to be re-diffed. Patch is
 # disabled below - AdamW 2009/01
 Patch2:		spring-0.77-unitsynclog.patch
-# Fix a string literal error - AdamW 2009/01
-Patch3:		spring-0.78.1.1-literal.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -66,7 +64,6 @@ more.
 %patch1 -p1 -b .luxi
 # See above FIXME notice - AdamW 2009/01
 #patch2 -p1
-%patch3 -p1 -b .literal
 perl -pi -e 's,%{name}.png,%{name},g' rts/%{name}.desktop
 
 cat > README.install.urpmi <<EOF
