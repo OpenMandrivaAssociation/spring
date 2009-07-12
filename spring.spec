@@ -13,10 +13,7 @@ Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 Patch1:		spring-0.79.0.2-font.patch
 # (Anssi 01/2008) put unitsync.log into ~/.spring, it ends up in pwd when some
 # external tools dlopen unitsync.so:
-# FIXME: the code completely changed with 0.78. I'm not sure if it still
-# needs to be patched, but if so, it needs to be re-diffed. Patch is
-# disabled below - AdamW 2009/01
-Patch2:		spring-0.77-unitsynclog.patch
+Patch2:		spring-unitsynclog.patch
 # Fix a string literal error (from dev alphabeta on irc)
 Patch3:		spring-0.79.0.2-literal.patch
 License:	GPLv2+
@@ -64,8 +61,7 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
-# See above FIXME notice - AdamW 2009/01
-#patch2 -p1
+%patch2 -p1
 %patch3 -p1 -b .literal
 sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
 
