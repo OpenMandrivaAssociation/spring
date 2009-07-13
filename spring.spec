@@ -7,7 +7,7 @@
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
 Version:	0.79.1.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
@@ -73,7 +73,9 @@ EOF
 # (so presumably preferred upstream), the scons one has problems in
 # install phase (some stuff won't install to buildroot), and cmake is
 # just...nicer. - AdamW 2008/12
-%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name} -DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include
+# CMAKE_BUILD_TYPE is to enforce not setting type=debug, which would actually
+# disable full debugging symbols due to trickery in CMakeLists.txt - Anssi 2009/07
+%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name} -DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %make
 
 %install
