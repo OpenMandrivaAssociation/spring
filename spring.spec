@@ -6,7 +6,7 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.79.0.2
+Version:	0.79.1.2
 Release:	%mkrel 1
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
@@ -14,8 +14,6 @@ Patch1:		spring-0.79.0.2-font.patch
 # (Anssi 01/2008) put unitsync.log into ~/.spring, it ends up in pwd when some
 # external tools dlopen unitsync.so:
 Patch2:		spring-unitsynclog.patch
-# Fix a string literal error (from dev alphabeta on irc)
-Patch3:		spring-0.79.0.2-literal.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -62,7 +60,6 @@ more.
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
 %patch2 -p1
-%patch3 -p1 -b .literal
 sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
 
 cat > README.install.urpmi <<EOF
@@ -84,6 +81,13 @@ rm -rf %{buildroot}
 pushd build
 %makeinstall_std
 popd
+
+# Nanar:
+# need by spring dedicated server
+# it is not installed 
+install -m755 \
+    build/tools/DedicatedServer/libspringserver.so \
+    %{buildroot}%{_libdir}/libspringserver.so
 
 perl -pi -e 's|^Exec=.*|Exec=%{_gamesbindir}/%{name}|' %{buildroot}%{_datadir}/applications/%{name}.desktop
 desktop-file-install \
@@ -121,4 +125,4 @@ rm -rf %{buildroot}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
 %{_libdir}/%{name}
-
+%{_libdir}/libspringserver.so
