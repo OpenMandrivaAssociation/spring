@@ -1,13 +1,9 @@
 %define distname spring_%{version}
 
-# No shared library, and the cmake build currently has internal linking
-# issues - AdamW 2008/12
-%define _disable_ld_no_undefined	1
-
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
 Version:	0.79.1.2
-Release:	%mkrel 2
+Release:	%mkrel 3
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
