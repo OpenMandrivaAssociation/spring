@@ -10,6 +10,8 @@ Patch1:		spring-0.79.0.2-font.patch
 # (Anssi 01/2008) put unitsync.log into ~/.spring, it ends up in pwd when some
 # external tools dlopen unitsync.so:
 Patch2:		spring-unitsynclog.patch
+#temp fix for 0.80.5 branch: compile as static some class
+Patch3:		spring_0.80.5.2-fix_static_connection.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -57,6 +59,7 @@ more.
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
 %patch2 -p1
+%patch3 -p1
 sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
 
 cat > README.install.urpmi <<EOF
