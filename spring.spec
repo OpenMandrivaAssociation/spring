@@ -117,7 +117,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc Documentation/Spring*.txt Documentation/userdocs/* Documentation/cmds.txt
+#%doc Documentation/Spring*.txt Documentation/userdocs/* Documentation/cmds.txt
 %doc README.install.urpmi
 %{_sysconfdir}/%{name}
 %{_gamesbindir}/%{name}
