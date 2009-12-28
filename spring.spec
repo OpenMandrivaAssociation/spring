@@ -28,6 +28,7 @@ BuildRequires:	libxcursor-devel
 BuildRequires:	python-devel
 BuildRequires:	cmake
 BuildRequires:	zip
+BuildRequires:	p7zip
 BuildRequires:	zlib-devel
 %if %{mdkversion} >= 200810
 BuildRequires:	java-rpmbuild
