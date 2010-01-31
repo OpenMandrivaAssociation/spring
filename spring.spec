@@ -58,8 +58,8 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
-%patch2 -p1
-%patch3 -p1
+#%patch2 -p1
+#%patch3 -p1
 sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
 
 cat > README.install.urpmi <<EOF
