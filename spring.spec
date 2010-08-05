@@ -2,8 +2,8 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.81.2
-Release:	%mkrel 2
+Version:	0.81.2.1
+Release:	%mkrel 1
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
@@ -32,6 +32,8 @@ BuildRequires:	cmake
 BuildRequires:	zip
 BuildRequires:	p7zip
 BuildRequires:	zlib-devel
+BuildRequires:	xsltproc
+BuildRequires:	docbook-style-xsl
 %if %{mdkversion} >= 200810
 BuildRequires:	java-rpmbuild
 %else
