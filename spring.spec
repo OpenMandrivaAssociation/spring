@@ -7,17 +7,15 @@ Release:	%mkrel 1
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
-# (Anssi 01/2008) put unitsync.log into ~/.spring, it ends up in pwd when some
-# external tools dlopen unitsync.so:
-Patch2:		spring-unitsynclog.patch
-#temp fix for 0.80.5 branch: compile as static some class
-Patch3:		spring_0.80.5.2-fix_static_connection.patch
+Patch2:		spring-0.80.2-allegro.patch
+Patch3:		spring-dlopen.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	SDL-devel
 BuildRequires:	boost-devel
+BuildRequires:	allegro-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	devil-devel
 BuildRequires:	freetype2-devel
@@ -34,11 +32,12 @@ BuildRequires:	p7zip
 BuildRequires:	zlib-devel
 BuildRequires:	xsltproc
 BuildRequires:	docbook-style-xsl
+BuildRequires:	asciidoc
 %if %{mdkversion} >= 200810
 BuildRequires:	java-rpmbuild
 %else
 BuildRequires:	jpackage-utils
-BuildRequires:	java-devel-icedtea
+BuildRequires:	java-devel-openjdk
 %define java_home %{_jvmdir}/java-icedtea
 %endif
 Obsoletes:	%{name}-data < 0.75
@@ -60,9 +59,11 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
-#%patch2 -p1
-#%patch3 -p1
+%patch2 -p1 -b .allegro
+%patch3 -p0 -b .dlopen
 sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
+
+find rts/lib/7z -type f | xargs chmod -x
 
 cat > README.install.urpmi <<EOF
 If you want to install additional mods and maps that are not available as
@@ -77,14 +78,12 @@ EOF
 # just...nicer. - AdamW 2008/12
 # CMAKE_BUILD_TYPE is to enforce not setting type=debug, which would actually
 # disable full debugging symbols due to trickery in CMakeLists.txt - Anssi 2009/07
-%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name} -DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name}-DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include
 %make
 
 %install
 rm -rf %{buildroot}
-pushd build
-%makeinstall_std
-popd
+%makeinstall_std -C build
 
 # Nanar:
 # need by spring dedicated server
