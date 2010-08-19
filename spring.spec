@@ -2,13 +2,11 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.81.2.1
+Version:	0.82.3
 Release:	%mkrel 1
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
-Patch2:		spring-0.80.2-allegro.patch
-Patch3:		spring-dlopen.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -59,9 +57,7 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
-%patch2 -p1 -b .allegro
-%patch3 -p0 -b .dlopen
-sed -i -e 's,%{name}.png,%{name},g' installer/freedesktop/applications/spring.desktop
+sed -i -e 's,%{name}.png,%{name},g' cont/freedesktop/applications/spring.desktop
 
 find rts/lib/7z -type f | xargs chmod -x
 
@@ -78,7 +74,7 @@ EOF
 # just...nicer. - AdamW 2008/12
 # CMAKE_BUILD_TYPE is to enforce not setting type=debug, which would actually
 # disable full debugging symbols due to trickery in CMakeLists.txt - Anssi 2009/07
-%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name}-DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include
+%cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name} -DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include
 %make
 
 %install
@@ -88,8 +84,11 @@ rm -rf %{buildroot}
 # Nanar:
 # need by spring dedicated server
 # it is not installed 
+
+mkdir -p %{buildroot}%{_libdir}/
+
 install -m755 \
-    build/tools/DedicatedServer/libspringserver.so \
+    build/libspringserver.so \
     %{buildroot}%{_libdir}/libspringserver.so
 
 perl -pi -e 's|^Exec=.*|Exec=%{_gamesbindir}/%{name}|' %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -121,11 +120,11 @@ rm -rf %{buildroot}
 #%doc Documentation/Spring*.txt Documentation/userdocs/* Documentation/cmds.txt
 %doc README.install.urpmi
 %{_sysconfdir}/%{name}
-%{_gamesbindir}/%{name}
-%{_gamesbindir}/%{name}-dedicated
+%{_gamesbindir}/%{name}*
 %{_gamesdatadir}/%{name}
 %{_datadir}/pixmaps/*.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
 %{_libdir}/%{name}
 %{_libdir}/libspringserver.so
+%{_mandir}/man*/spring*
