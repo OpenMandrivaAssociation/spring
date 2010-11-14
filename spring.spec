@@ -2,11 +2,12 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.82.3
-Release:	%mkrel 2
+Version:	0.82.6.1
+Release:	%mkrel 1
 Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
 # use system font:
 Patch1:		spring-0.79.0.2-font.patch
+Patch2:     spring-0.82.6.1-listdcl.patch
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://taspring.clan-sy.com/
@@ -57,6 +58,7 @@ more.
 %prep
 %setup -q -n %{distname}
 %patch1 -p1 -b .font
+%patch2 -p0 -b .listdcl
 sed -i -e 's,%{name}.png,%{name},g' cont/freedesktop/applications/spring.desktop
 
 find rts/lib/7z -type f | xargs chmod -x
@@ -120,7 +122,7 @@ rm -rf %{buildroot}
 #%doc Documentation/Spring*.txt Documentation/userdocs/* Documentation/cmds.txt
 %doc README.install.urpmi
 %{_sysconfdir}/%{name}
-%{_gamesbindir}/%{name}*
+%{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
 %{_datadir}/pixmaps/*.png
 %{_datadir}/applications/%{name}.desktop
