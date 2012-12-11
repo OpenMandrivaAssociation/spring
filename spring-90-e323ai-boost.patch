@@ -1,0 +1,14 @@
+--- spring_90.0/AI/Skirmish/E323AI/CScopedTimer.h.old	2012-08-30 12:48:29.495317938 +0300
++++ spring_90.0/AI/Skirmish/E323AI/CScopedTimer.h	2012-08-30 12:49:04.534020446 +0300
+@@ -36,7 +36,11 @@
+ 
+ 	static unsigned int GetEngineRuntimeMSec() {
+ 		boost::xtime t;
++#if (BOOST_VERSION >= 105000)
++		boost::xtime_get(&t, boost::TIME_UTC_);
++#else
+ 		boost::xtime_get(&t, boost::TIME_UTC);
++#endif
+ 		const unsigned int milliSeconds = t.sec * 1000 + (t.nsec / 1000000);
+ 		return milliSeconds;
+ 	}

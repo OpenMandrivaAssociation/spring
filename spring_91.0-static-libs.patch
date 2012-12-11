@@ -1,0 +1,9 @@
+diff -urN spring_91.0/tools/pr-downloader/src/FileSystem/CMakeLists.txt spring_91.0-patched/tools/pr-downloader/src/FileSystem/CMakeLists.txt
+--- spring_91.0/tools/pr-downloader/src/FileSystem/CMakeLists.txt	2012-08-31 07:58:56.000000000 +1100
++++ spring_91.0-patched/tools/pr-downloader/src/FileSystem/CMakeLists.txt	2012-11-21 01:11:35.732482969 +1100
+@@ -1,4 +1,4 @@
+-add_library(FileSystem
++add_library(FileSystem STATIC
+ 		AtomicFile.cpp
+ 		FileData.cpp
+ 		FileSystem.cpp

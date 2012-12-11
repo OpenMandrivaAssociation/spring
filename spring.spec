@@ -1,44 +1,51 @@
+# Don't provides private modules
+%if %{_use_internal_dependency_generator}
+%define __noautoprov '(.*)\\.so$'
+%endif
+
 %define distname spring_%{version}
+
+%define Werror_cflags %nil
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	0.82.6.1
-Release:	%mkrel 2
-Source0:	http://spring.clan-sy.com/dl/%{name}_%{version}_src.tar.lzma
-# use system font:
-Patch1:		spring-0.79.0.2-font.patch
-Patch2:     spring-0.82.6.1-listdcl.patch
+Version:	91.0
+Release:	4
 License:	GPLv2+
 Group:		Games/Strategy
-URL:		http://taspring.clan-sy.com/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	SDL-devel
+URL:		http://springrts.com
+Source0:	http://sourceforge.net/projects/springrts/files/springrts/%{name}-%{version}/%{name}_%{version}_src.tar.lzma
+# use system font:
+Patch1:		spring-89.0-font.patch
+Patch5:		spring-89-dso.patch
+Patch6:		spring-90-e323ai-boost.patch
+Patch7:		spring_91.0-static-libs.patch
+
 BuildRequires:	boost-devel
-BuildRequires:	allegro-devel
-BuildRequires:	desktop-file-utils
-BuildRequires:	devil-devel
-BuildRequires:	freetype2-devel
-BuildRequires:	glew-devel
-BuildRequires:	mesaglu-devel
-BuildRequires:	openal-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	libxcursor-devel
-BuildRequires:	python-devel
+BuildRequires:	pkgconfig(allegro)
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(glew)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(IL)
+BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(openal)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(xcursor)
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	asciidoc
 BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
 BuildRequires:	zip
 BuildRequires:	p7zip
-BuildRequires:	zlib-devel
 BuildRequires:	xsltproc
 BuildRequires:	docbook-style-xsl
-BuildRequires:	asciidoc
-%if %{mdkversion} >= 200810
+BuildRequires:	icoutils
+BuildRequires:	java-1.6.0-openjdk-devel
 BuildRequires:	java-rpmbuild
-%else
-BuildRequires:	jpackage-utils
-BuildRequires:	java-devel-openjdk
-%define java_home %{_jvmdir}/java-icedtea
-%endif
+BuildRequires:	xerces-j2
 Obsoletes:	%{name}-data < 0.75
 Requires:	fonts-ttf-freefont
 # Some mod is required, this is the one that was shipped with
@@ -56,31 +63,41 @@ Annihilation and has the same features Total Annihilation had, and
 more.
 
 %prep
-%setup -q -n %{distname}
+%setup -qn %{name}_%{version}
 %patch1 -p1 -b .font
-%patch2 -p0 -b .listdcl
-sed -i -e 's,%{name}.png,%{name},g' cont/freedesktop/applications/spring.desktop
-
-find rts/lib/7z -type f | xargs chmod -x
+%patch5 -p0
+%patch6 -p1
+%patch7 -p1
 
 cat > README.install.urpmi <<EOF
 If you want to install additional mods and maps that are not available as
-Mandriva packages, you can install them inside your homedir in subdirectories
+Rosa packages, you can install them inside your homedir in subdirectories
 .spring/maps and .spring/mods.
 EOF
 
+
+  sed -i "s/FE_DFL_ENV/FE_DFL_ENV_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp rts/lib/streflop/SMath.cpp
+  sed -i "s/FE_INVALID/FE_INVALID_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_DENORMAL/FE_DENORMAL_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_DIVBYZERO/FE_DIVBYZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_OVERFLOW/FE_OVERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_UNDERFLOW/FE_UNDERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_INEXACT/FE_INEXACT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_ALL_EXCEPT/FE_ALL_EXCEPT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_DOWNWARD/FE_DOWNWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_TONEAREST/FE_TONEAREST_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_TOWARDZERO/FE_TOWARDZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/FE_UPWARD/FE_UPWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+  sed -i "s/feclearexcept/feclearexcept_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+
 %build
-# Spring has both scons and cmake build systems. The cmake one is newer
-# (so presumably preferred upstream), the scons one has problems in
-# install phase (some stuff won't install to buildroot), and cmake is
-# just...nicer. - AdamW 2008/12
-# CMAKE_BUILD_TYPE is to enforce not setting type=debug, which would actually
-# disable full debugging symbols due to trickery in CMakeLists.txt - Anssi 2009/07
+export CFLAGS="%{optflags} -fpermissive"
+export CXXFLAGS="%{optflags} -fpermissive"
+export LDFLAGS="-ldl"
 %cmake -DBINDIR=%{_gamesbindir} -DLIBDIR=%{_lib}/%{name} -DJAVA_INCLUDE_PATH=%{java_home}/include -DJAVA_INCLUDE_PATH2=%{java_home}/include/linux -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std -C build
 
 # Nanar:
@@ -89,15 +106,31 @@ rm -rf %{buildroot}
 
 mkdir -p %{buildroot}%{_libdir}/
 
+rm -fr %{buildroot}%{_datadir}/doc
+
 install -m755 \
     build/libspringserver.so \
     %{buildroot}%{_libdir}/libspringserver.so
 
+mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{32x32,64x64,128x128,256x256}/apps
+cd rts
+icotool -x %{name}.new.ico
+mv %{name}*32x32*.png %{name}.png
+install -m 644 %{name}.png %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+mv %{name}*64x64*.png %{name}.png
+install -m 644 %{name}.png %{buildroot}%{_iconsdir}/hicolor/64x64/apps/%{name}.png
+mv %{name}*128x128*.png %{name}.png
+install -m 644 %{name}.png %{buildroot}%{_iconsdir}/hicolor/128x128/apps/%{name}.png
+mv %{name}*256x256*.png %{name}.png
+install -m 644 %{name}.png %{buildroot}%{_iconsdir}/hicolor/256x256/apps/%{name}.png
+
 perl -pi -e 's|^Exec=.*|Exec=%{_gamesbindir}/%{name}|' %{buildroot}%{_datadir}/applications/%{name}.desktop
+perl -pi -e 's|true|false|' %{buildroot}%{_datadir}/applications/%{name}.desktop
 desktop-file-install \
   --vendor="" \
   --remove-category="Application" \
-  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/%{name}.desktop
+
 
 install -d -m755 %{buildroot}%{_sysconfdir}/%{name}
 echo '$HOME/.spring' > %{buildroot}%{_sysconfdir}/%{name}/datadir
@@ -105,28 +138,24 @@ echo '%{_gamesdatadir}/%{name}' >> %{buildroot}%{_sysconfdir}/%{name}/datadir
 
 install -d -m755 %{buildroot}%{_gamesdatadir}/%{name}/{mods,maps}
 
-%if %mdkversion < 200900
-%post
-%update_mime_database
-%endif
-%if %mdkversion < 200900
-%postun
-%clean_mime_database
-%endif
+rm -rf %{buildroot}%{_datadir}/pixmaps/*.png
 
-%clean
-rm -rf %{buildroot}
+# Looks like it's not needed
+rm -rf %{buildroot}%{_gamesbindir}/pr-downloader
+rm -rf %{buildroot}%{_libdir}/%{name}/libpr-downloader_shared.so
+rm -rf %{buildroot}%{_libdir}/%{name}/libpr-downloader_static.a
+rm -rf %{buildroot}%{_libdir}/%{name}/pkgconfig/libspringdownloader.pc
+rm -rf %{buildroot}%{_includedir}/spring/Downloader/pr-downloader.h
 
 %files
-%defattr(-,root,root)
-#%doc Documentation/Spring*.txt Documentation/userdocs/* Documentation/cmds.txt
 %doc README.install.urpmi
 %{_sysconfdir}/%{name}
 %{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
-%{_datadir}/pixmaps/*.png
+%{_iconsdir}/hicolor/*/apps/%{name}.*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml
 %{_libdir}/%{name}
 %{_libdir}/libspringserver.so
 %{_mandir}/man*/spring*
+

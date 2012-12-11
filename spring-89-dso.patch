@@ -1,0 +1,54 @@
+--- rts/builds/dedicated/CMakeLists.txt.old	2012-07-16 09:03:54.652059698 +0300
++++ rts/builds/dedicated/CMakeLists.txt	2012-07-16 09:04:24.368792712 +0300
+@@ -43,6 +43,8 @@
+ 	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/SDL)
+ ENDIF (MINGW OR APPLE)
+ 
++FIND_PACKAGE(ZLIB REQUIRED)
++LIST(APPEND engineDedicatedLibraries ${ZLIB_LIBRARY})
+ 
+ ### Assemble the incude dirs
+ INCLUDE_DIRECTORIES(${ENGINE_SRC_ROOT_DIR}/)
+--- rts/builds/default/CMakeLists.txt.old	2012-07-16 09:00:29.266904434 +0300
++++ rts/builds/default/CMakeLists.txt	2012-07-16 09:02:33.093792356 +0300
+@@ -19,6 +19,8 @@
+ FIND_PACKAGE_STATIC(GLEW 1.5.1 REQUIRED)
+ LIST(APPEND engineLibraries ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES})
+ 
++FIND_PACKAGE(ZLIB REQUIRED)
++LIST(APPEND engineLibraries ${ZLIB_LIBRARY})
+ 
+ FIND_PACKAGE_STATIC(Freetype REQUIRED)
+ INCLUDE_DIRECTORIES(${FREETYPE_INCLUDE_DIRS})
+--- rts/builds/headless/CMakeLists.txt.old	2012-07-16 09:04:37.071678580 +0300
++++ rts/builds/headless/CMakeLists.txt	2012-07-16 09:05:16.974320042 +0300
+@@ -31,7 +31,6 @@
+ 	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/SDL)
+ ENDIF (MINGW OR APPLE)
+ 
+-
+ # headlessstubs are our stubs that replace libGL, libGLU, libGLEW, libSDL (yes really!)
+ LIST(APPEND engineHeadlessLibraries headlessStubs)
+ 
+@@ -39,6 +38,9 @@
+ 
+ LIST(APPEND engineHeadlessLibraries ${engineCommonLibraries})
+ 
++FIND_PACKAGE(ZLIB REQUIRED)
++LIST(APPEND engineHeadlessLibraries ${ZLIB_LIBRARY})
++
+ INCLUDE_DIRECTORIES(${ENGINE_SRC_ROOT_DIR}/lib/assimp/include)
+ 
+ 
+--- rts/builds/multithreaded/CMakeLists.txt.old	2012-07-16 09:03:08.063478233 +0300
++++ rts/builds/multithreaded/CMakeLists.txt	2012-07-16 09:03:34.077244540 +0300
+@@ -31,6 +31,9 @@
+ FIND_PACKAGE(GLEW 1.5.1 REQUIRED)
+ LIST(APPEND engineLibraries ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${GLEW_LIBRARIES})
+ 
++FIND_PACKAGE(ZLIB REQUIRED)
++LIST(APPEND engineLibraries ${ZLIB_LIBRARY})
++
+ FIND_PACKAGE_STATIC(Freetype REQUIRED)
+ LIST(APPEND engineLibraries ${FREETYPE_LIBRARIES})
+ 
