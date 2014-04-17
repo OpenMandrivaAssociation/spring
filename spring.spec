@@ -10,17 +10,28 @@
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
 Version:	91.0
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		Games/Strategy
-URL:		http://springrts.com
+Url:		http://springrts.com
 Source0:	http://sourceforge.net/projects/springrts/files/springrts/%{name}-%{version}/%{name}_%{version}_src.tar.lzma
+Source10:	%{name}.rpmlintrc
 # use system font:
 Patch1:		spring-89.0-font.patch
 Patch5:		spring-89-dso.patch
 Patch6:		spring-90-e323ai-boost.patch
 Patch7:		spring_91.0-static-libs.patch
-
+BuildRequires:	asciidoc
+BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
+BuildRequires:	docbook-style-xsl
+BuildRequires:	java-1.6.0-openjdk-devel
+BuildRequires:	java-rpmbuild
+BuildRequires:	icoutils
+BuildRequires:	p7zip
+BuildRequires:	xerces-j2
+BuildRequires:	xsltproc
+BuildRequires:	zip
 BuildRequires:	boost-devel
 BuildRequires:	pkgconfig(allegro)
 BuildRequires:	pkgconfig(freetype2)
@@ -35,17 +46,6 @@ BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	asciidoc
-BuildRequires:	cmake
-BuildRequires:	desktop-file-utils
-BuildRequires:	zip
-BuildRequires:	p7zip
-BuildRequires:	xsltproc
-BuildRequires:	docbook-style-xsl
-BuildRequires:	icoutils
-BuildRequires:	java-1.6.0-openjdk-devel
-BuildRequires:	java-rpmbuild
-BuildRequires:	xerces-j2
 Obsoletes:	%{name}-data < 0.75
 Requires:	fonts-ttf-freefont
 # Some mod is required, this is the one that was shipped with
@@ -58,9 +58,22 @@ Suggests:	spring-maps-default
 Suggests:	springlobby
 
 %description
-Spring is a 3D realtime strategy game. It was inspired by Total
-Annihilation and has the same features Total Annihilation had, and
-more.
+Spring is a 3D realtime strategy game. It was inspired by Total Annihilation
+and has the same features Total Annihilation had, and more.
+
+%files
+%doc README.install.urpmi
+%{_sysconfdir}/%{name}
+%{_gamesbindir}/*
+%{_gamesdatadir}/%{name}
+%{_iconsdir}/hicolor/*/apps/%{name}.*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/mime/packages/%{name}.xml
+%{_libdir}/%{name}
+%{_libdir}/libspringserver.so
+%{_mandir}/man*/spring*
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -qn %{name}_%{version}
@@ -146,16 +159,4 @@ rm -rf %{buildroot}%{_libdir}/%{name}/libpr-downloader_shared.so
 rm -rf %{buildroot}%{_libdir}/%{name}/libpr-downloader_static.a
 rm -rf %{buildroot}%{_libdir}/%{name}/pkgconfig/libspringdownloader.pc
 rm -rf %{buildroot}%{_includedir}/spring/Downloader/pr-downloader.h
-
-%files
-%doc README.install.urpmi
-%{_sysconfdir}/%{name}
-%{_gamesbindir}/*
-%{_gamesdatadir}/%{name}
-%{_iconsdir}/hicolor/*/apps/%{name}.*
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/mime/packages/%{name}.xml
-%{_libdir}/%{name}
-%{_libdir}/libspringserver.so
-%{_mandir}/man*/spring*
 

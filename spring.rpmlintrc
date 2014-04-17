@@ -1,0 +1,2 @@
+addFilter("wrong-script-end-of-line-encoding")
+addFilter("spurious-executable-perm")
