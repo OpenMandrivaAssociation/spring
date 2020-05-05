@@ -44,6 +44,10 @@ BuildRequires:	pkgconfig(zlib)
 Obsoletes:	%{name}-data < 0.75
 Requires:	fonts-ttf-freefont
 
+Provides:	bundled(lua) = 5.1.4
+Provides:	bundled(luasocket) = 2.0.1
+Provides:	bundled(gflags) = 2.2.0
+
 # Some mod is required, this is the one that was shipped with
 # spring-data:
 Suggests:	spring-mod-nanoblobs
@@ -72,11 +76,8 @@ and has the same features Total Annihilation had, and more.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -qn %{name}_%{version}
-%patch1 -p1 -b .font
-%patch5 -p0
-%patch6 -p1
-%patch7 -p1
+%setup -qn %{name}-%{version}
+%autopatch -p1
 
 cat > README.install.urpmi <<EOF
 If you want to install additional mods and maps that are not available as
