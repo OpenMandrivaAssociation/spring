@@ -24,7 +24,7 @@ BuildRequires:	docbook-style-xsl
 BuildRequires:	jdk-current
 BuildRequires:	icoutils
 BuildRequires:	p7zip
-BuildRequires:	xerces-j2
+#BuildRequires:	xerces-j2
 BuildRequires:	xsltproc
 BuildRequires:	zip
 BuildRequires:	boost-devel
