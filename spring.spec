@@ -9,7 +9,7 @@
 
 Summary:	Realtime strategy game (inspired by Total Annihilation)
 Name:		spring
-Version:	104.0.1
+Version:	106.0.1
 Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
