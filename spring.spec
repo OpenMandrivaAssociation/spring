@@ -86,19 +86,19 @@ OpenMandriva packages, you can install them inside your homedir in subdirectorie
 EOF
 
 
-  sed -i "s/FE_DFL_ENV/FE_DFL_ENV_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp rts/lib/streflop/SMath.cpp
- sed -i "s/FE_INVALID/FE_INVALID_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_DENORMAL/FE_DENORMAL_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_DIVBYZERO/FE_DIVBYZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_OVERFLOW/FE_OVERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_UNDERFLOW/FE_UNDERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_INEXACT/FE_INEXACT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_ALL_EXCEPT/FE_ALL_EXCEPT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_DOWNWARD/FE_DOWNWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_TONEAREST/FE_TONEAREST_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_TOWARDZERO/FE_TOWARDZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/FE_UPWARD/FE_UPWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
-  sed -i "s/feclearexcept/feclearexcept_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_DFL_ENV/FE_DFL_ENV_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp rts/lib/streflop/SMath.cpp
+# sed -i "s/FE_INVALID/FE_INVALID_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_DENORMAL/FE_DENORMAL_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_DIVBYZERO/FE_DIVBYZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_OVERFLOW/FE_OVERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_UNDERFLOW/FE_UNDERFLOW_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_INEXACT/FE_INEXACT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_ALL_EXCEPT/FE_ALL_EXCEPT_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_DOWNWARD/FE_DOWNWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_TONEAREST/FE_TONEAREST_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_TOWARDZERO/FE_TOWARDZERO_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/FE_UPWARD/FE_UPWARD_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
+#  sed -i "s/feclearexcept/feclearexcept_/g" rts/lib/streflop/FPUSettings.h rts/System/Sync/FPUCheck.cpp rts/System/myMath.cpp rts/Lua/LuaParser.cpp
 
 %build
 export CXXFLAGS="%{optflags} -fpermissive"
@@ -113,10 +113,10 @@ export LDFLAGS="%{ldflags} -ldl"
        -DJAVA_AWT_INCLUDE_PATH=%{java_home}/include \
        -DBUILD_STATIC_LIBS=ON \
        -DBUILD_SHARED_LIBS=OFF
-%cmake_build
+%make_build
 
 %install
-%cmake_install
+%make_install -C build
 
 # Nanar:
 # need by spring dedicated server
