@@ -13,7 +13,7 @@ Version:	104.0.1
 Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
-Url:		http://springrts.com
+Url:		https://springrts.com
 Source0:	https://github.com/spring/spring/archive/%{version}/%{name}-%{version}.tar.gz
 Source10:	%{name}.rpmlintrc
 
